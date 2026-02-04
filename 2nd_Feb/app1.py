@@ -27,3 +27,7 @@ print(x.grad) # prints the derivative of f at x=-1
 print(f)
 
 # how to get to use the differentiation into the neural networks
+
+# updating weights and biases
+# w_new = w_old - lr * dw
+# b_old = b_old - lr * db

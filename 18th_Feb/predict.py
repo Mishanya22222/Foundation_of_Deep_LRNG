@@ -1,0 +1,23 @@
+import torch
+import torch.nn as nn  
+import torch.optim as optim  
+
+model_data = torch.load('model.pth')
+fm = model_data['fm']
+fs = model_data['fs']
+tm = model_data['tm']
+ts = model_data['ts']
+parameters = model_data['parameters']
+
+features = torch.tensor([
+    [5.5]
+])
+
+X = (features - fm) / fs
+
+model = nn.Linear(1,1)
+model.load_state_dict(parameters)
+
+prediction = model(X)
+prediction = prediction*ts + tm
+print(prediction)

@@ -36,9 +36,9 @@ for epoch in range(epochs):
 
 # saving optimal parameters
 torch.save({
-    "fm":fm,
-    "fs":fs,
-    "tm":tm,
-    "ts":ts,
-    "parameters":model.state_dict()
+    "fm":fm.detach().clone(),
+    "fs":fs.detach().clone(),
+    "tm":tm.detach().clone(),
+    "ts":ts.detach().clone(),
+    "parameters": model.state_dict()
 }, "model.pth")

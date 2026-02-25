@@ -14,11 +14,10 @@ target = torch.tensor(data["Diagnosis"].to_numpy()).float().reshape(-1,1)
 
 fm = features.mean(axis = 0, keepdim = True).reshape(-1,1) # look up the difference of axis = 0 and axis = 1
 fs = features.std(axis = 0,keepdim = True).reshape(-1,1)
-tm = target.mean(axis = 0,keepdim = True).reshape(-1,1)
-ts = target.std(axis = 0,keepdim = True).reshape(-1,1)
+# we have to keep the Y at 0 and 1 and therefore we don't need to standardize it
 
 X = (features - fm)/fs
-Y = (target- tm)/ts
+Y = target
 
 model = nn.Linear(1,1) # we don't have to put the sigmoid fucntion here
 criterian = nn.BCEWithLogitsLoss() # because it's included here
@@ -33,4 +32,9 @@ for epoch in range(epochs):
     optimizer.step()
     optimizer.zero_grad()
 
-    print(loss)
+# saving optimal parameters
+torch.save({
+    "fm":fm,
+    "fs":fs,
+    "parameters": model.state_dict()
+}, "model.pth")
